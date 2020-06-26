@@ -2,21 +2,12 @@ import moment from "moment";
 import React, { useState, useRef, useEffect } from "react";
 import { Button, Slider, Text, View } from "react-native";
 import { useInterval } from "../hooks/useInterval";
+import { useCountdown } from "../hooks/useCountdown";
+
 
 export const PomodoroTimer = () => {
   const [intervalNum, setIntervalNum] = useState(15);
-  const intervalInMs = intervalNum * 60 * 1000;
-  const [count, setCount] = useState(0)
-  const diff = intervalInMs - count
-  const [started, setStarted] = useState(false)
-  const remainingDuration = moment.duration(diff, "milliseconds")
-  const remainingMilliseconds = remainingDuration.asMilliseconds()
-  const remainingMinutes = moment.utc(remainingMilliseconds).format("mm:ss")
-  useInterval(() => {
-    if (started && remainingMilliseconds !== 0) {
-      setCount(count + 1000)
-    }
-  }, 1000)
+  const {time, start} = useCountdown({m: intervalNum})
   return (
     <View
       style={{
@@ -26,7 +17,7 @@ export const PomodoroTimer = () => {
         width: "100%",
       }}
     >
-      <Text>{remainingMinutes}</Text>
+      <Text>{time.format("mm:ss")}</Text>
       <Slider
         step={1}
         style={{ width: 200, height: 40 }}
@@ -37,7 +28,7 @@ export const PomodoroTimer = () => {
         minimumTrackTintColor="tomato"
         maximumTrackTintColor="tomato"
       />
-      <Button title={"Start"} onPress={() => setStarted(true)} />
+      <Button title={"Start"} onPress={start} />
     </View>
   );
 };
