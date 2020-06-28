@@ -1,17 +1,5 @@
-import moment from "moment";
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Button,
-  Slider,
-  Text,
-  View,
-  useWindowDimensions,
-  TouchableWithoutFeedback,
-  GestureResponderEvent,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
-import { useInterval } from "../hooks/useInterval";
+import React, { useState, useRef } from "react";
+import { Button, GestureResponderEvent, TouchableOpacity, View } from "react-native";
 import { useCountdown } from "use-moment-countdown";
 import styled from "styled-components/native";
 import Svg, { Path } from "react-native-svg";
@@ -61,7 +49,7 @@ export const PomodoroTimer = () => {
 
   const [timer, setTimer] = useState(initTimer);
   const timerRemainder = timer % (maxInterval + 1);
-  const { time, start, started, stop } = useCountdown(
+  const { time, start, started, stop, paused, reset } = useCountdown(
     { m: timer },
     { onDone: () => true, recuring: true }
   );
@@ -91,8 +79,10 @@ export const PomodoroTimer = () => {
     >
       <TouchableOpacity onPress={started ? stop : start}>
         <Background>
-          <Time>{timerRemainder === 60 && !started ? "60:00" : time.format("mm:ss")}</Time>
-          <BarContainer >
+          <Time>
+            {timerRemainder === 60 && !started ? "60:00" : time.format("mm:ss")}
+          </Time>
+          <BarContainer>
             <Svg
               style={{
                 position: "absolute",
@@ -106,7 +96,7 @@ export const PomodoroTimer = () => {
               <Path
                 d="M 3.5 0 L 0 7 L 7 7 z"
                 transform={{ scale: 1 }}
-                fill="black"
+                fill="#248f24"
               />
             </Svg>
             <Bar />
@@ -117,6 +107,9 @@ export const PomodoroTimer = () => {
           </BarContainer>
         </Background>
       </TouchableOpacity>
+        <View style={{ position: "absolute", bottom: "30%" }}>
+          {paused && <Button title="Reset" onPress={reset} />}
+        </View>
     </Container>
   );
 };

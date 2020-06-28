@@ -5455,10 +5455,10 @@ url-parse@^1.4.4:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-moment-countdown@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/use-moment-countdown/-/use-moment-countdown-1.4.0.tgz#1c172596afd73cfd7a6c7dcc5b26fe778bc3c6e8"
-  integrity sha512-U5iB5J8ykRFKqtK/CIg2lJErp1KSDnBQrTWFWq5vHxUendQ6YsCLN1UQgy0tEZfxzuvgX04p4VRnjB9aPj1m/g==
+use-moment-countdown@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/use-moment-countdown/-/use-moment-countdown-1.5.0.tgz#0b5ee15aeed542de5def0e3a38afc14ef914c54b"
+  integrity sha512-um4o9ZkaBItt7N1WKZMPfbzZkruHbcbO14Xzy2ZwcZSiX7EUsmjx7RKwrs5aQSuQiHlCFrbtIrgtV/SoipmQBw==
 
 use@^3.1.0:
   version "3.1.1"
