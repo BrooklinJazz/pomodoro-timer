@@ -1,8 +1,15 @@
 import React, { useState, useRef } from "react";
-import { Button, GestureResponderEvent, TouchableOpacity, View } from "react-native";
+import {
+  Button,
+  GestureResponderEvent,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Slider from "@react-native-community/slider";
 import { useCountdown } from "use-moment-countdown";
 import styled from "styled-components/native";
 import Svg, { Path } from "react-native-svg";
+import { Platform } from "react-native";
 
 const Container = styled.View`
   height: 100%;
@@ -107,9 +114,29 @@ export const PomodoroTimer = () => {
           </BarContainer>
         </Background>
       </TouchableOpacity>
-        <View style={{ position: "absolute", bottom: "30%" }}>
-          {paused && <Button title="Reset" onPress={reset} />}
+      <View style={{ position: "absolute", bottom: "30%" }}>
+        {paused && <Button title="Reset" onPress={reset} />}
+      </View>
+      {Platform.OS === "web" && !started &&  (
+        <View
+          style={{
+            position: "absolute",
+            width: 300,
+            bottom: "20%",
+          }}
+        >
+          <Slider
+            style={{ height: 40 }}
+            minimumValue={1}
+            step={1}
+            maximumValue={maxInterval}
+            value={timer}
+            onValueChange={setTimer}
+            minimumTrackTintColor="tomato"
+            maximumTrackTintColor="tomato"
+          />
         </View>
+      )}
     </Container>
   );
 };

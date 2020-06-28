@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { PomodoroTimer } from './src';
 
 

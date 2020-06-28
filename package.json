@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/datetimepicker": "2.2.2",
-    "@react-native-community/slider": "^3.0.0",
+    "@react-native-community/slider": "^3.0.0-rc.2",
     "@types/react-native-text-input-mask": "^0.7.3",
     "expo": "~37.0.3",
     "moment": "^2.27.0",
