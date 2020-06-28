@@ -4,6 +4,7 @@ import {
   GestureResponderEvent,
   TouchableOpacity,
   View,
+  Vibration,
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useCountdown } from "use-moment-countdown";
@@ -55,11 +56,12 @@ export const PomodoroTimer = () => {
   const initTimer = 25;
 
   const [timer, setTimer] = useState(initTimer);
-  const timerRemainder = timer % (maxInterval + 1);
+  const timerRemainder = timer > 0 ? timer % (maxInterval + 1) : (maxInterval - (Math.abs(timer) % maxInterval +1)) % (maxInterval + 1);
   const { time, start, started, stop, paused, reset } = useCountdown(
-    { m: timer },
-    { onDone: () => true, recuring: true }
+    { m: timerRemainder },
+    { onDone: () => Vibration.vibrate(1, false), recuring: true }
   );
+  
   const left = (timerRemainder / maxInterval) * 100;
 
   let previousTouch = useRef<number | undefined>().current;
