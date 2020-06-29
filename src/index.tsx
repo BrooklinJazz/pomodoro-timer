@@ -95,6 +95,14 @@ export const PomodoroTimer = () => {
     }
   };
 
+  const handlePress = () => {
+    if (!started || paused) {
+      start()
+    } else {
+      stop()
+    }
+  }
+
   return (
     <Container
       onTouchEnd={() => {
@@ -102,7 +110,7 @@ export const PomodoroTimer = () => {
       }}
       onTouchMove={handleGesture}
     >
-      <TouchableOpacity onPress={started ? stop : start}>
+      <TouchableOpacity onPress={handlePress}>
         <Background>
           <Time>
             {timerRemainder === 60 && !started ? "60:00" : time.format("mm:ss")}
