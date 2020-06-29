@@ -5463,10 +5463,10 @@ url-parse@^1.4.4:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-use-moment-countdown@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/use-moment-countdown/-/use-moment-countdown-1.5.1.tgz#19023ed1aace1a42da76ec63f99d62cff7ad7fcd"
-  integrity sha512-ZUyjYcaqrwkhFMNREoP1LikZ0UqAFsppoHcAvjHWimS2wPrECXREUyphiSVcRzyWDxPN4hvJ8e5mX0b7hkOHhA==
+use-moment-countdown@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/use-moment-countdown/-/use-moment-countdown-1.5.3.tgz#44668f922e795bf47e99c3c8ec1910bb20b9bd8a"
+  integrity sha512-nsYBX0U902s4qnsYQzRC0JQbqmiT8j1t4oY8iqbkd/AQy7jlqyMej7qQvB0aHBneav4CbjoT1Zo3pSSoxGR1JA==
 
 use@^3.1.0:
   version "3.1.1"

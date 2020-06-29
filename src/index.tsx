@@ -66,7 +66,6 @@ const Bar = styled.View`
 export const PomodoroTimer = () => {
   const maxInterval = 60;
   const initTimer = 25;
-
   const [timer, setTimer] = useState(initTimer);
   const timerRemainder =
     timer > 0
@@ -75,7 +74,7 @@ export const PomodoroTimer = () => {
         (maxInterval + 1);
   const { time, start, started, stop, paused, reset } = useCountdown(
     { m: timerRemainder },
-    { onDone: () => new Sound().play(), recuring: true }
+    { onDone: () => new Sound().play(), recurring: true }
   );
 
   const left = (timerRemainder / maxInterval) * 100;
