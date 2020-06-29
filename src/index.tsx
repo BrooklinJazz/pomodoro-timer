@@ -4,7 +4,6 @@ import {
   GestureResponderEvent,
   TouchableOpacity,
   View,
-  Vibration,
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useCountdown } from "use-moment-countdown";
@@ -128,11 +127,10 @@ export const PomodoroTimer = () => {
             >
               <Path
                 d="M 3.5 0 L 0 7 L 7 7 z"
-                transform={{ scale: 1 }}
                 fill="#248f24"
               />
             </Svg>
-            {new Array(maxInterval / 10).fill().map(each => <Bar/>)}
+            {new Array(maxInterval / 10).fill().map((_, i) => <Bar key={i}/>)}
           </BarContainer>
         </Background>
       </TouchableOpacity>

@@ -22,7 +22,7 @@
     "react-native-svg": "^12.1.0",
     "react-native-web": "~0.11.7",
     "styled-components": "^5.1.1",
-    "use-moment-countdown": "^1.6.0"
+    "use-moment-countdown": "^1.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
