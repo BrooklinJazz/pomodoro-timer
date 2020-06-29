@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Button,
   GestureResponderEvent,
@@ -11,6 +11,18 @@ import { useCountdown } from "use-moment-countdown";
 import styled from "styled-components/native";
 import Svg, { Path } from "react-native-svg";
 import { Platform } from "react-native";
+
+import { Audio } from "expo-av";
+
+class Sound {
+  constructor(public sound = new Audio.Sound()) {}
+
+  async play() {
+    await Audio.setIsEnabledAsync(true);
+    await this.sound.loadAsync(require("../assets/sounds/tada.mp3"));
+    await this.sound.playAsync();
+  }
+}
 
 const Container = styled.View`
   height: 100%;
@@ -56,12 +68,16 @@ export const PomodoroTimer = () => {
   const initTimer = 25;
 
   const [timer, setTimer] = useState(initTimer);
-  const timerRemainder = timer > 0 ? timer % (maxInterval + 1) : (maxInterval - (Math.abs(timer) % maxInterval +1)) % (maxInterval + 1);
+  const timerRemainder =
+    timer > 0
+      ? timer % (maxInterval + 1)
+      : (maxInterval - ((Math.abs(timer) % maxInterval) + 1)) %
+        (maxInterval + 1);
   const { time, start, started, stop, paused, reset } = useCountdown(
     { m: timerRemainder },
-    { onDone: () => Vibration.vibrate(1, false), recuring: true }
+    { onDone: () => new Sound().play(), recuring: true }
   );
-  
+
   const left = (timerRemainder / maxInterval) * 100;
 
   let previousTouch = useRef<number | undefined>().current;
@@ -79,6 +95,7 @@ export const PomodoroTimer = () => {
       previousTouch = currentTouch;
     }
   };
+
   return (
     <Container
       onTouchEnd={() => {
@@ -108,18 +125,14 @@ export const PomodoroTimer = () => {
                 fill="#248f24"
               />
             </Svg>
-            <Bar />
-            <Bar />
-            <Bar />
-            <Bar />
-            <Bar />
+            {new Array(maxInterval / 10).fill().map(each => <Bar/>)}
           </BarContainer>
         </Background>
       </TouchableOpacity>
       <View style={{ position: "absolute", bottom: "30%" }}>
         {paused && <Button title="Reset" onPress={reset} />}
       </View>
-      {Platform.OS === "web" && !started &&  (
+      {Platform.OS === "web" && !started && (
         <View
           style={{
             position: "absolute",
