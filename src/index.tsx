@@ -21,20 +21,15 @@ export const PomodoroTimer = () => {
   const maxInterval = 60;
   const initTimer = 25;
   const [timer, setTimer] = useState(initTimer);
-  const timerRemainder =
-    timer > 0
-      ? timer % (maxInterval + 1)
-      : (maxInterval - ((Math.abs(timer) % maxInterval) + 1)) %
-        (maxInterval + 1);
+
   const { time, start, started, stop, paused, reset } = useCountdown(
-    { m: timerRemainder },
+    { m: timer },
     { onDone: () => new Sound().play(), recurring: true }
   );
 
-  const left = (timerRemainder / maxInterval) * 100;
+  const left = (timer / maxInterval) * 100;
 
   let previousTouch = useRef<number | undefined>().current;
-
   const getSwipeDirection = (currentTouch: number) => {
     previousTouch = previousTouch || currentTouch;
     const isSwipingLeft = previousTouch > currentTouch;
@@ -42,16 +37,17 @@ export const PomodoroTimer = () => {
     return { isSwipingRight, isSwipingLeft };
   };
 
-  const handleGesture = ({nativeEvent: {pageX}}: GestureResponderEvent) => {
+  const handleGesture = ({ nativeEvent: { pageX } }: GestureResponderEvent) => {
     if (started) {
       return;
     }
     const { isSwipingRight, isSwipingLeft } = getSwipeDirection(pageX);
-
     if (isSwipingRight) {
-      setTimer(timer + 1);
+      const nextTimer = timer + 1;
+      setTimer(nextTimer >= maxInterval ? 0 : nextTimer);
     } else if (isSwipingLeft) {
-      setTimer(timer - (1 % maxInterval));
+      const nextTimer = timer - 1;
+      setTimer(nextTimer <= 0 ? maxInterval : nextTimer);
     }
     previousTouch = pageX;
   };
@@ -74,7 +70,7 @@ export const PomodoroTimer = () => {
       <TouchableOpacity onPress={handlePress}>
         <Background>
           <Time>
-            {timerRemainder === 60 && !started ? "60:00" : time.format("mm:ss")}
+            {timer === 60 && !started ? "60:00" : time.format("mm:ss")}
           </Time>
           <BarContainer>
             <Triangle
