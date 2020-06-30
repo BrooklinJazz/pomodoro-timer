@@ -7,60 +7,15 @@ import {
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useCountdown } from "use-moment-countdown";
-import styled from "styled-components/native";
-import Svg, { Path } from "react-native-svg";
 import { Platform } from "react-native";
 
-import { Audio } from "expo-av";
-
-class Sound {
-  constructor(public sound = new Audio.Sound()) {}
-
-  async play() {
-    await Audio.setIsEnabledAsync(true);
-    await this.sound.loadAsync(require("../assets/sounds/tada.mp3"));
-    await this.sound.playAsync();
-  }
-}
-
-const Container = styled.View`
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Background = styled.View`
-  background-color: tomato;
-  height: 200;
-  width: 200;
-  border-radius: 100px;
-`;
-
-const Time = styled.Text`
-  color: white;
-  font-size: 30;
-  text-align: center;
-  position: absolute;
-  top: 30%;
-  width: 100%;
-`;
-
-const BarContainer = styled.View`
-  border-bottom-color: black;
-  border-bottom-width: 2px;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-around;
-  position: absolute;
-  top: 50%;
-`;
-
-const Bar = styled.View`
-  height: 10px;
-  width: 2px;
-  background-color: black;
-`;
+import { Background } from "./Background";
+import { Container } from "./Container";
+import { Time } from "./Time";
+import { BarContainer } from "./BarContainer";
+import { Bar } from "./Bar";
+import { Sound } from "./Sound";
+import { Triangle } from "./Triangle";
 
 export const PomodoroTimer = () => {
   const maxInterval = 60;
@@ -80,27 +35,34 @@ export const PomodoroTimer = () => {
 
   let previousTouch = useRef<number | undefined>().current;
 
-  const handleGesture = (e: GestureResponderEvent) => {
-    const currentTouch = e.nativeEvent.pageX;
+  const getSwipeDirection = (currentTouch: number) => {
     previousTouch = previousTouch || currentTouch;
+    const isSwipingLeft = previousTouch > currentTouch;
+    const isSwipingRight = previousTouch < currentTouch;
+    return { isSwipingRight, isSwipingLeft };
+  };
+
+  const handleGesture = ({nativeEvent: {pageX}}: GestureResponderEvent) => {
     if (started) {
       return;
-    } else if (previousTouch < currentTouch) {
-      setTimer(timer + 1);
-      previousTouch = currentTouch;
-    } else if (previousTouch > currentTouch) {
-      setTimer(timer - (1 % maxInterval));
-      previousTouch = currentTouch;
     }
+    const { isSwipingRight, isSwipingLeft } = getSwipeDirection(pageX);
+
+    if (isSwipingRight) {
+      setTimer(timer + 1);
+    } else if (isSwipingLeft) {
+      setTimer(timer - (1 % maxInterval));
+    }
+    previousTouch = pageX;
   };
 
   const handlePress = () => {
     if (!started || paused) {
-      start()
+      start();
     } else {
-      stop()
+      stop();
     }
-  }
+  };
 
   return (
     <Container
@@ -115,22 +77,22 @@ export const PomodoroTimer = () => {
             {timerRemainder === 60 && !started ? "60:00" : time.format("mm:ss")}
           </Time>
           <BarContainer>
-            <Svg
+            <Triangle
               style={{
-                position: "absolute",
                 left: `${left}%`,
-                marginLeft: -3.5,
-                height: 7,
-                width: 7,
-                transform: [{ scale: 4 }, { translateY: 7 }],
+                transform: [
+                  {
+                    scale: 4,
+                  },
+                  {
+                    translateY: 7,
+                  },
+                ],
               }}
-            >
-              <Path
-                d="M 3.5 0 L 0 7 L 7 7 z"
-                fill="#248f24"
-              />
-            </Svg>
-            {new Array(maxInterval / 10).fill().map((_, i) => <Bar key={i}/>)}
+            />
+            {new Array(maxInterval / 10).fill().map((_, i) => (
+              <Bar key={i} />
+            ))}
           </BarContainer>
         </Background>
       </TouchableOpacity>
