@@ -8,7 +8,7 @@ export const ResetButton = ({
   reset: () => void;
   paused: boolean;
 }) => (
-  <View style={{ position: "absolute", bottom: "30%" }}>
+  <View style={{ position: "absolute", bottom: "20%" }}>
     {paused && <Button title="Reset" onPress={reset} />}
   </View>
 );
