@@ -24,19 +24,36 @@ export default function App() {
     return { isSwipingRight, isSwipingLeft };
   };
 
-  const handleGesture = ({ nativeEvent: { pageX } }: GestureResponderEvent) => {
-    if (started) {
-      return;
-    }
-    const { isSwipingRight, isSwipingLeft } = getSwipeDirection(pageX);
+  const incrementTimerOnSwipe = (pageX: number) => {
+    const { isSwipingRight } = getSwipeDirection(pageX);
     if (isSwipingRight) {
       const nextTimer = timer + 1;
       setTimer(nextTimer >= maxInterval ? 0 : nextTimer);
-    } else if (isSwipingLeft) {
+    }
+  }
+
+  const decrementTimerOnSwipe = (pageX: number) => {
+    const { isSwipingLeft } = getSwipeDirection(pageX);
+    if (isSwipingLeft) {
       const nextTimer = timer - 1;
       setTimer(nextTimer <= 0 ? maxInterval : nextTimer);
     }
+  }
+
+  const changeTimerOnSwipe = (pageX: number) => {
+    if (!started) {
+      incrementTimerOnSwipe(pageX)
+      decrementTimerOnSwipe(pageX)
+    }
+  }
+
+  const updatePreviousTouch = (pageX: number) => {
     previousTouch = pageX;
+  }
+
+  const handleSwipeGesture = ({ nativeEvent: { pageX } }: GestureResponderEvent) => {
+    changeTimerOnSwipe(pageX)
+    updatePreviousTouch(pageX)
   };
 
   const handlePress = () => {
@@ -52,7 +69,7 @@ export default function App() {
       onTouchEnd={() => {
         previousTouch = undefined;
       }}
-      onTouchMove={handleGesture}
+      onTouchMove={handleSwipeGesture}
     >
       <PomodoroTimer
         time={time}
