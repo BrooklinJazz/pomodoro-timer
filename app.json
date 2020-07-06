@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "pomodoro",
+    "name": "tomato timer",
     "slug": "pomodoro",
     "platforms": [
       "ios",
@@ -11,7 +11,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/tomatotimer.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
