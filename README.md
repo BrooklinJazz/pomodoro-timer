@@ -2,7 +2,7 @@
 Tomato Timer is a simple gesture based interval timer.
 
 I built Tomato Timer as a way to regularly remind myself to take breaks while working, or learning.
-I was frustrated by the amount of bloat or unnecessary features in other apps and wanted something that gave an extremely simple and smooth interface to set a recurring timer.
+Tomato Timer gives a simple and smooth gesture based interface to set a recurring timer.
 
 ## See the Project
 - Web: https://simple-pomodoro-timer.netlify.app/
