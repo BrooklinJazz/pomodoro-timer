@@ -1,9 +1,12 @@
 # Tomato Timer
 
-Tomato Timer is a simple gesture based interval timer.
+Welcome to Tomato Timer (currently registered as Simple Interval Timer on the google play store), a gesture based interval timer app that encourages you to take breaks at regular intervals.
 
-I built Tomato Timer as a way to regularly remind myself to take breaks while working, or learning.
-Tomato Timer gives a simple and smooth gesture based interface to set a recurring timer.
+- swipe right and left to increase and decrease timer
+- start and stop the timer
+- reset the timer
+- visual feedback of the timers progress with a green triangle
+- celebrate your break with sound effects!
 
 ## See the Project
 - Web: https://simple-pomodoro-timer.netlify.app/
