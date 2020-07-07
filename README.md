@@ -35,5 +35,4 @@ on android
 yarn android
 ```
 
-# Project Images
 ![](./docs/app_demo.webp)
