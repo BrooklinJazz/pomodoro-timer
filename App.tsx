@@ -30,7 +30,7 @@ export default function App() {
       const nextTimer = timer + 1;
       setTimer(nextTimer >= maxInterval ? 0 : nextTimer);
     }
-  }
+  };
 
   const decrementTimerOnSwipe = (pageX: number) => {
     const { isSwipingLeft } = getSwipeDirection(pageX);
@@ -38,22 +38,24 @@ export default function App() {
       const nextTimer = timer - 1;
       setTimer(nextTimer <= 0 ? maxInterval : nextTimer);
     }
-  }
+  };
 
   const changeTimerOnSwipe = (pageX: number) => {
     if (!started) {
-      incrementTimerOnSwipe(pageX)
-      decrementTimerOnSwipe(pageX)
+      incrementTimerOnSwipe(pageX);
+      decrementTimerOnSwipe(pageX);
     }
-  }
+  };
 
   const updatePreviousTouch = (pageX: number) => {
     previousTouch = pageX;
-  }
+  };
 
-  const handleSwipeGesture = ({ nativeEvent: { pageX } }: GestureResponderEvent) => {
-    changeTimerOnSwipe(pageX)
-    updatePreviousTouch(pageX)
+  const handleSwipeGesture = ({
+    nativeEvent: { pageX },
+  }: GestureResponderEvent) => {
+    changeTimerOnSwipe(pageX);
+    updatePreviousTouch(pageX);
   };
 
   const handlePress = () => {
@@ -66,6 +68,10 @@ export default function App() {
 
   return (
     <Container
+      // giving the container a style
+      // seems to fix android bug where
+      // gestures are not handled
+      style={{ backgroundColor: "white" }}
       onTouchEnd={() => {
         previousTouch = undefined;
       }}
@@ -81,4 +87,4 @@ export default function App() {
       <WebSlider timer={timer} started={started} onChange={setTimer} />
     </Container>
   );
-};
+}
